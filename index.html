@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>在 GitHub 的创作小角落 — dizzbl</title>
+  <meta name="keywords" content="GitHub, 开源, 代码, 仓库, PR, README, dizzbl" />
+  <meta name="description" content="欢迎来到我的 GitHub 小角落：项目、笔记与开源贡献的集合。" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root{
+      --surface:#fff;
+      --muted:#586069;
+      --text:#24292e;
+      --accent:#e11d48;
+      --btn-bg:#24292e;
+      --btn-left:#2ea44f;
+      --card-border:#e1e4e8;
+      --btn-height:40px;
+    }
+
+    body{
+      font-family: "Microsoft YaHei", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      color: var(--text);
+      min-height: 100vh;
+      background: linear-gradient(135deg,#f6f8fa 0%, #ffffff 50%, #e9eef6 100%);
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .main-box{
+      background:var(--surface);
+      border-radius:12px;
+      width:100%;
+      max-width:720px;
+      padding:20px;
+      box-shadow:0 8px 26px rgba(36,41,46,0.06);
+      border:1px solid var(--card-border);
+    }
+
+    .header{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .octocat{
+      width:48px; height:48px; border-radius:10px;
+      background:linear-gradient(135deg,#24292e,#57606a);
+      display:flex; align-items:center; justify-content:center; color:#fff;
+      font-weight:800; font-size:18px; box-shadow:0 6px 18px rgba(36,41,46,0.06);
+      flex:0 0 auto;
+    }
+    .title{ font-size:18px; color:#0b1220; font-weight:700; }
+    .subtitle{ font-size:12px; color:var(--muted); margin-top:4px; }
+
+    /* 更简洁、明显且小巧的按钮 */
+    .button-container{
+      display:flex; justify-content:center; align-items:center; margin:14px 0;
+    }
+
+    .btn {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      height:var(--btn-height);
+      padding:0 10px;
+      border-radius:10px;
+      background:var(--btn-bg);
+      color:#fff;
+      font-weight:700;
+      font-size:14px;
+      line-height:1;
+      box-shadow:none;
+      border:1px solid rgba(255,255,255,0.06);
+      transition:transform .12s ease, box-shadow .12s ease, background .12s ease;
+      cursor:pointer;
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn:focus { outline:2px solid rgba(99,102,241,0.14); outline-offset:2px; }
+    .btn:active { transform:translateY(1px); }
+
+    .btn .left {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:32px;
+      height:28px;
+      border-radius:6px;
+      background:var(--btn-left);
+      font-size:14px;
+      padding:0 6px;
+      box-shadow:0 1px 0 rgba(0,0,0,0.06) inset;
+    }
+
+    /* 默认单行显示（桌面/平板），小屏幕允许换行 */
+    .btn .label {
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      max-width:220px;
+      color:#fff;
+      font-size:14px;
+      padding-right:6px;
+      display:inline-block;
+      text-align:left;
+    }
+
+    .btn .tag {
+      background:rgba(255,255,255,0.08);
+      color:#d9e3ef;
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:6px;
+      margin-left:6px;
+      flex:0 0 auto;
+    }
+
+    .btn:hover { box-shadow:0 6px 18px rgba(36,41,46,0.06); transform:translateY(-1px); }
+
+    /* 点击提示：稍微小一点 */
+    .click-text{
+      margin-top:8px;
+      font-size:13px; /* 较之前略小 */
+      color:var(--accent);
+      font-weight:700;
+      text-align:center;
+    }
+
+    .notice{ margin-top:14px; padding-top:6px; border-top:1px dashed #e6edf3; }
+    .notice-title{ font-weight:700; font-size:14px; margin-bottom:10px; display:flex; align-items:center; color:var(--text); }
+    .notice-title::before{ content:"🐙"; margin-right:8px; font-size:16px; }
+    .notice p{ font-size:13px; color:#4b5560; line-height:1.6; margin-bottom:8px; }
+
+    ul.tips{ list-style:decimal; padding-left:20px; margin-top:8px; line-height:1.8; color:#2f363d; font-size:13px; }
+
+    .repo-list{ margin-top:10px; display:grid; gap:8px; }
+    .repo{ display:flex; gap:12px; align-items:center; justify-content:space-between;
+      padding:10px 12px; border-radius:8px; background:#f6f8fa; border:1px solid #eaeef2; font-size:13px; color:#1b1f23;
+    }
+    .repo .name{ font-weight:600; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:70%; }
+    .repo .meta{ color:#586069; flex:0 0 auto; font-size:13px; }
+
+    .footer{ text-align:center; font-size:13px; margin-top:16px; color:#6a737d; }
+
+    /* 响应式调整：在窄屏允许按钮 label 换行并减小字号，防止文字被截断 */
+    @media (max-width:420px){
+      :root{ --btn-height:38px; }
+      .octocat{ width:44px; height:44px; font-size:16px; }
+      .btn { font-size:13px; padding:0 8px; border-radius:9px; }
+      .btn .label {
+        white-space:normal;      /* 允许换行 */
+        overflow:visible;
+        text-overflow:unset;
+        max-width:160px;
+        font-size:13px;
+        text-align:center;
+      }
+      .btn .tag { padding:3px 6px; font-size:12px; }
+      .click-text{ font-size:12px; } /* 再小一点在超窄屏 */
+      .main-box{ padding:16px; }
+    }
+
+    @media (max-width:340px){
+      .btn .label{ max-width:120px; font-size:12px; }
+      .btn .left { min-width:28px; height:24px; font-size:13px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-box">
+    <div class="header">
+      <div class="octocat" aria-hidden="true">GH</div>
+      <div style="min-width:0;">
+        <div class="title">dizhiy 的 GitHub 小角落</div>
+        <div class="subtitle">项目展示 · 学习笔记 · 开源贡献</div>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <button class="btn" id="enter-button" aria-label="访问我的 GitHub">
+        <span class="left" aria-hidden="true">★</span>
+        <span class="label">访问我的 GitHub 发布页</span>
+        <span class="tag">github.com</span>
+      </button>
+    </div>
+
+    <p class="click-text">点击上方按钮，进入最新地址发布页、星标项目和最新动态</p>
+
+    <div class="notice">
+      <div class="notice-title">开源与协作小贴士</div>
+      <p>* 在 README 中写清楚项目用途、安装与使用示例，降低贡献门槛。</p>
+      <p>* 小步提交（frequent commits）并写清楚提交信息，便于回溯。</p>
+
+      <ul class="tips">
+        <li>精简 issue 描述：背景、重现步骤、期望与实际结果。</li>
+        <li>提交 PR 前运行测试并在描述中关联相关 issue。</li>
+        <li>为项目准备贡献指南（CONTRIBUTING.md）和代码风格说明。</li>
+      </ul>
+
+      <div style="margin-top:10px; font-weight:700; color:#24292e;">精选仓库</div>
+      <div class="repo-list" id="repo-list">
+        <div class="repo">
+          <div class="name">fabuyepro/example-project</div>
+          <div class="meta">⭐ 128</div>
+        </div>
+        <div class="repo">
+          <div class="name">fabuyepro/blog-notes</div>
+          <div class="meta">📄 文章与笔记</div>
+        </div>
+        <div class="repo">
+          <div class="name">fabuyepro/tooling-scripts</div>
+          <div class="meta">⚙️ 实用脚本</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      欢迎来访，动动手指点个 Star 支持一下 ✨<br>
+      Copyright © 2026 fabuyepro
+    </div>
+  </div>
+
+  <script>
+    // 点击/回车跳转到目标
+    const enterBtn = document.getElementById('enter-button');
+    enterBtn.addEventListener('click', () => {
+      window.open('go.html', '_blank', 'noopener');
+    });
+    enterBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        enterBtn.click();
+      }
+    });
+  </script>
+</body>
+</html>
